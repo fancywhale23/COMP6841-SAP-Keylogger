@@ -7,7 +7,7 @@ import base64
 hist = set()
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(("0.0.0.0", 53))
+sock.bind(('0.0.0.0', 53))
 
 while True:
     data, addr = sock.recvfrom(2048)
@@ -22,7 +22,7 @@ while True:
     if m:
         payload = m.group(1)
         try:
-            decoded = base64.b64decode(payload.encode("ascii")).decode("ascii")
+            decoded = base64.b64decode(payload.encode('ascii')).decode('ascii')
             # Only print unique messages to filter out repeated DNS requests
             if decoded not in hist:
                 hist.add(decoded)
